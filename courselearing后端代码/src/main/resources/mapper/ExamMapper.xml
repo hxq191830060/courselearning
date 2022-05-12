@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.seecoder.courselearning.mapperservice.question.ExamMapper">
+    <resultMap id="BaseResultMap" type="cn.seecoder.courselearning.po.question.Exam">
+        <result column="examId" jdbcType="INTEGER" property="examId" />
+        <result column="courseId" jdbcType="INTEGER" property="courseId" />
+        <result column="description" property="description" />
+        <result column="name"  property="name" />
+        <result column="startTime" jdbcType="TIMESTAMP"  property="startTime" />
+        <result column="endTime" jdbcType="TIMESTAMP"  property="endTime" />
+    </resultMap>
+
+
+    <insert id="insert" parameterType="cn.seecoder.courselearning.po.question.Exam">
+        insert into exam (courseId,name,description,startTime,endTime)
+        values (#{courseId},#{name},#{description},#{startTime},#{endTime});
+    </insert>
+
+    <select id="getExamsByCourseId" parameterType="java.lang.Integer"
+            resultType="cn.seecoder.courselearning.po.question.Exam">
+        select examId,courseId,name,description,startTime,endTime from exam where courseId=#{courseId};
+    </select>
+
+    <select id="getlastExamId" resultType="java.lang.Integer">
+        select max(examId) from exam;
+    </select>
+
+</mapper>

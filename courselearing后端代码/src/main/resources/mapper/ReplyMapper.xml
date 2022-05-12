@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.seecoder.courselearning.mapperservice.forum.ReplyMapper">
+
+    <resultMap id="BaseResultMap" type="cn.seecoder.courselearning.po.forum.Reply">
+        <id column="postId" jdbcType="INTEGER" property="postId" />
+        <result column="replyId" jdbcType="INTEGER" property="replyId" />
+        <result column="userId" jdbcType="INTEGER" property="userId" />
+        <result column="createTime" property="createTime" />
+        <result column="content"  property="content" />
+    </resultMap>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from reply where replyId=#{replyId};
+    </delete>
+
+    <insert id="insert" parameterType="cn.seecoder.courselearning.po.forum.Reply" useGeneratedKeys="true" keyProperty="replyId">
+        insert into reply (postId,userId, createTime, content) values
+        (#{postId},#{userId},#{createTime},#{content});
+    </insert>
+
+
+    <select id="seleceReplyListByPostId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select postId,replyId,userId,createTime,content from reply where postId=#{postId};
+    </select>
+
+    <select id="getLastedReplyId" resultType="java.lang.Integer">
+        select max(replyId) from reply;
+    </select>
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.seecoder.courselearning.mapperservice.forum.PostMapper">
+    <resultMap id="BaseResultMap" type="cn.seecoder.courselearning.po.forum.Post">
+        <id column="postId" jdbcType="INTEGER" property="postId" />
+        <result column="courseId" jdbcType="INTEGER" property="courseId" />
+        <result column="userId" jdbcType="INTEGER" property="userId" />
+        <result column="createTime" property="createTime" />
+        <result column="title"  property="title" />
+        <result column="content"  property="content" />
+    </resultMap>
+
+    <select id="getAllPostsByCourseId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select postId,courseId,userId,createTime,title,content from post where courseId=#{courseId};
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="postId" parameterType="cn.seecoder.courselearning.po.forum.Post">
+        insert into post (courseId, userId, createTime, title, content) values (#{courseId},#{userId},#{createTime}
+        ,#{title},#{content});
+    </insert>
+
+
+    <select id="getLastedPostId" resultType="java.lang.Integer">
+        select max(postId) from post;
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from post where postId=#{postId};
+    </delete>
+
+    <select id="getOneUserAllPosts" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select postId,courseId,userId,createTime,title,content from post where userId=#{userId};
+    </select>
+
+    <select id="getPostByPostId" parameterType="java.lang.Integer"
+            resultType="cn.seecoder.courselearning.po.forum.Post">
+        select postId,courseId,userId,createTime,title,content from post where postId=#{postId};
+    </select>
+</mapper>

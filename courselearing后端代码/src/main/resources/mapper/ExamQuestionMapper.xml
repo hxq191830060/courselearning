@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.seecoder.courselearning.mapperservice.question.ExamQuestionMapper">
+
+    <insert id="insert" parameterType="java.lang.Integer">
+        insert into exam_question (examId,questionId) values (#{examId},#{questionId});
+    </insert>
+
+    <select id="getQuestionsByExamId" parameterType="java.lang.Integer" resultType="cn.seecoder.courselearning.po.question.Question">
+        select q.questionId,q.courseId,q.description,q.answer,q.analysis from exam_question eq,question q,exam e
+        where eq.examId=#{examId} and eq.questionId=q.questionId and eq.examId=e.examId and e.courseId=q.courseId;
+    </select>
+</mapper>

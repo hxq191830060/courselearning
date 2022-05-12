@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.seecoder.courselearning.mapperservice.question.QuestionMapper">
+    <resultMap id="BaseResultMap" type="cn.seecoder.courselearning.po.question.Question">
+        <result column="questionId" jdbcType="INTEGER" property="questionId" />
+        <result column="courseId" jdbcType="INTEGER" property="courseId" />
+        <result column="description" property="description" />
+        <result column="answer"  property="answer" />
+        <result column="analysis"  property="analysis" />
+    </resultMap>
+
+    <insert id="insert" parameterType="cn.seecoder.courselearning.po.question.Question">
+        insert into question (courseId,description,answer,analysis) values (#{courseId},#{description}
+        ,#{answer},#{analysis});
+    </insert>
+
+    <select id="getQuestionsByCourseId" parameterType="java.lang.Integer"
+            resultType="cn.seecoder.courselearning.po.question.Question">
+        select questionId,courseId,description,answer,analysis from question where courseId=#{courseId};
+    </select>
+
+    <select id="getLastedQuestionId" resultType="java.lang.Integer">
+        select max(questionId) from question;
+    </select>
+
+</mapper>
